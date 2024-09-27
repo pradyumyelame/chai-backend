@@ -1,19 +1,28 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
-const app= express();
+const app = express();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
+    origin:process.env.CORS_ORIGIN,
+    credentials:true
 }))
 
-// configuration when data is comming from differet sources
 
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended:true, limit:"16kb"}))
+app.use(express.json({limit:"16kb"}))
+app.use(express.urlencoded({extended: true,limit:"16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+// routes
 
-export {app}
+import userRouter from "./routes/user.routes.js"
+
+
+
+
+// routes declaration
+app.use("/api/v1/users",userRouter)
+
+// http://localhsot:8000/api/v1/users/register
+export{app}
